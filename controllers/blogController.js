@@ -1,10 +1,11 @@
 const Blog = require('../model/blogModel.js');
+const User = require('../model/userModel.js');
 const asyncHandler = require('express-async-handler');
-
+const mongoose = require("mongoose")
 
 const getAllBlogsController = asyncHandler(async (req, res) => {
     try{
-        const blogs = await Blog.find({});
+        const blogs = await Blog.find({}).populate("user");
 
         if(!blogs){
             return res.status(200).send({
@@ -31,16 +32,35 @@ const getAllBlogsController = asyncHandler(async (req, res) => {
 
 const createBlogController = asyncHandler(async (req, res) => {
     try{
-        const {title , description, image} = req.body;
+        const {title , description, image, user} = req.body;
 
-        if(!title || !description || !image){
+        if(!title || !description || !image || !user){
             return res.status(400).send({
                 success: false,
                 message: "Please Fill Details"
             })
         }
+        const existingUser = await User.findById(user);
 
-        const newBlog = await Blog.create({title, description, image});
+        if(!existingUser){
+          return res.status(404).send({
+            success: false,
+            message: "unable to find user"
+          })
+        }
+
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
+
+        const newBlog = await Blog.create({title, description, image, user});
+        await newBlog.save({session});
+        existingUser.blogs.push(newBlog)
+        await existingUser.save({session});
+
+
+        await session.commitTransaction();
+
 
         if (newBlog) {
             return res.status(500).send({
@@ -104,8 +124,9 @@ const updateBlogController = asyncHandler(async (req, res) => {
 const deleteBlogController = asyncHandler(async (req, res) => {
     try{
         const {id} = req.params;
-        const blog = await Blog.findById(id);
-
+        const blog = await Blog.findById(id).populate("user");
+        await blog.user.blogs.pull(blog);
+        await blog.user.save();
         if(blog){
             const deletedBlog = await blog.deleteOne();
             return res.status(200).send({
@@ -158,10 +179,36 @@ const getBlogByIdController = asyncHandler(async (req, res) => {
     }
 });
 
+
+const userBlogController = asyncHandler(async (req, res)=>{
+  try{
+    const userBlogs = await User.findById(req.params.id).populate("blogs");
+    if(!userBlogs){
+      return res.status(404).send({
+        success: false,
+        message: "No Blogs Found"
+      })
+    }
+
+    return res.status(200).send({
+      success: true,
+      message: "user blogs",
+      userBlogs
+    })
+  }catch(error){
+    console.log(error);
+      return res.status(400).send({
+        success: false,
+        message: "Error User Blog",
+        error,
+      })
+  }
+})
 module.exports = { 
     getAllBlogsController,
     createBlogController,
     updateBlogController,
     deleteBlogController,
     getBlogByIdController,
+    userBlogController,
 };
