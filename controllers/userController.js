@@ -47,9 +47,9 @@ const registerController = asyncHandler(async (req, res) => {
     const user = await User.create({ username, email, password });
 
     if (user) {
-      return res.status(500).send({
-        message: 'New User Successfully Created',
+      return res.status(200).send({
         success: true,
+        message: 'New User Successfully Created',
         user,
       });
     } else {

@@ -9,7 +9,7 @@ const {
     userBlogController,
 } = require("../controllers/blogController.js");
 
-router.route("/all-blogs").get(getAllBlogsController);
+router.route("/all-blog").get(getAllBlogsController);
 router.route("/create-blog").post(createBlogController);
 router.route("/update-blog/:id").put(updateBlogController);
 router.route("/delete-blog/:id").delete(deleteBlogController);

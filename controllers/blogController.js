@@ -8,7 +8,7 @@ const getAllBlogsController = asyncHandler(async (req, res) => {
         const blogs = await Blog.find({}).populate("user");
 
         if(!blogs){
-            return res.status(200).send({
+            return res.status(404).send({
                 success: false,
                 message: "No Blogs Found"
             })
@@ -63,7 +63,7 @@ const createBlogController = asyncHandler(async (req, res) => {
 
 
         if (newBlog) {
-            return res.status(500).send({
+            return res.status(200).send({
               message: 'New Blog Successfully Created',
               success: true,
               newBlog,
