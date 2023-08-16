@@ -23,7 +23,7 @@ app.use("/api/v1/blog", blogRoutes);
 
 const __dirnm = path.resolve();
 
-if(process.env.NODE_ENV === "production"){
+if(process.env.DEV_NODE === "production"){
 
     app.use(express.static(path.join(__dirnm, "/frontend/build")));
 
