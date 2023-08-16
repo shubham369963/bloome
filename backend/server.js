@@ -17,6 +17,27 @@ app.use(morgan("dev"));
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/blog", blogRoutes);
 
+//----------------------------------------------------Deployment----------------------------------------------------
+
+
+const __dirnm = path.resolve();
+
+if(process.env.NODE_ENV === "production"){
+
+    app.use(express.static(path.join(__dirnm, "/frontend/build")));
+
+    app.get("*", (req, res)=>{
+        res.sendFile(path.resolve(__dirnm, "frontend", "build", "index.html"));
+    });
+
+}else{
+    app.get("/", (req, res)=>{
+        res.send("app running");
+    });
+}
+
+//----------------------------------------------------Deployment----------------------------------------------------
+
 
 app.get("/", (req, res)=>{
     res.status(200).send({

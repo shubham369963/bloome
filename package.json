@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "client": "npm start --prefix ./client",
+    "start": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm start\" \"npm run client\"",
-    "build": "npm install && npm install --prefix client && npm run build --prefix client"
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Shubham Halade",
   "license": "ISC",
