@@ -8,6 +8,7 @@ const port = process.env.PORT || 5000;
 const app = express();
 const userRoutes = require("./routers/userRoute.js");
 const blogRoutes = require("./routers/blogRoute.js");
+const path = require("path")
 connDB()
 app.use(cors());
 app.use(express.json());
