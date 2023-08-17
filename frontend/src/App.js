@@ -7,15 +7,18 @@ import UserBlogs from "./pages/UserBlogs.js";
 import CreateBlog from "./pages/CreateBlog.js";
 import BlogDetails from "./pages/BlogDetails.js";
 import { Toaster } from "react-hot-toast";
+import {useState} from "react"
 function App() {
+
+  const [search, setSearch] = useState("")
   return (
     <>
-      <Header />
+      <Header setSearch={setSearch}/>
       <Toaster />
       <Routes>
-        <Route path="/" element={<Blogs />} />
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/my-blogs" element={<UserBlogs />} />
+        <Route path="/" element={<Blogs search={search}/>} />
+        <Route path="/blogs" element={<Blogs search={search}/>} />
+        <Route path="/my-blogs" element={<UserBlogs search={search}/>} />
         <Route path="/blog-details/:id" element={<BlogDetails />} />
         <Route path="/create-blog" element={<CreateBlog />} />
         <Route path="/login" element={<Login />} />

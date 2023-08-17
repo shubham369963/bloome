@@ -1,0 +1,29 @@
+@media only screen and (min-width: 700px){
+    .blockk{
+        width: 40%;
+    }
+
+    .imgg{
+        background-size: cover;
+    }
+}
+
+@media only screen and (min-width: 400px )and (max-width: 700px){
+    .blockk{
+        width: 80%;
+    }
+
+    .imgg{
+        background-size: cover;
+    }
+}
+
+@media only screen and (max-width: 400px){
+    .blockk{
+        width: 100%;
+    }
+
+    .imgg{
+        background-size: cover;
+    }
+}

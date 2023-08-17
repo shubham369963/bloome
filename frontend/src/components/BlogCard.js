@@ -11,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Box, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Blog.css"
 
 export default function BlogCard({
   title,
@@ -39,8 +40,8 @@ export default function BlogCard({
   };
   return (
     <Card
+      className="blockk"
       sx={{
-        width: "90vw",
         margin: "auto",
         mt: 2,
         padding: 2,
@@ -69,7 +70,7 @@ export default function BlogCard({
         title={username}
         subheader={time}
       />
-      <CardMedia component="img" height="194" image={image} alt="Paella dish" />
+      <CardMedia className="imgg" component="img" height="150" image={image} alt="Paella dish" />
       <CardContent>
         <Typography variant="h6" color="text.secondary">
           Title : {title}

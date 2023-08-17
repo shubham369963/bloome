@@ -161,6 +161,14 @@ function Header(props) {
                   LinkComponent={Link}
                   to="/create-blog"
                 >Create Blog</Button>
+                <Divider />
+            <input
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              onChange={(e) => props.setSearch(e.target.value)}
+            />
                 </>
           )}
             {!isLogin && (
@@ -180,7 +188,14 @@ function Header(props) {
                 >
                   Register
                 </Button>
-                
+                <Divider />
+            <input
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              onChange={(e) => props.setSearch(e.target.value)}
+            />
               </>
             )}
             {isLogin && (
@@ -219,6 +234,13 @@ function Header(props) {
           >
             Bloome
           </Typography>
+          <input
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              onChange={(e) => props.setSearch(e.target.value)}
+            />
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
           <Toolbar>
            {isLogin && (
